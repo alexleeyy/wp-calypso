@@ -110,7 +110,12 @@ const siteNode = ( { id: siteId } ) => ( { type: 'site', siteId } );
 
 const typedNode = ( { type } ) => ( { type } );
 
-const userNode = ( { id } ) => ( { type: 'user', id } );
+const userNode = ( { id: userId, name, site_id: siteId } ) => ( {
+	type: 'person',
+	name,
+	siteId,
+	userId,
+} );
 
 const inferNode = range => {
 	const { type, url } = range;
