@@ -197,9 +197,9 @@ const joinResults = ( [ reduced, remainder ] ) =>
  * to implement some kind of stack safety here such
  * as the use of a "trampoline".
  *
- * @param {Array} prev previously parsed results
- * @param {String} text remaining text to parse
- * @param {Number} offset current index into text string
+ * @param {Array} accum.0 previously parsed results
+ * @param {String} accum.1 remaining text to parse
+ * @param {Number} accum.2 current index into text string
  * @param {Object} nextRange next range from formatted block
  * @returns {Array} parsed results: text and nodes
  */
