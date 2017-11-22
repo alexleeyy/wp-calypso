@@ -11,6 +11,8 @@ import { localize } from 'i18n-calypso';
 import FormField from '../form-field';
 import FormSelect from 'components/forms/form-select';
 import AppliesToFilteredList from './applies-to-filtered-list';
+import ProductSearch from 'woocommerce/components/product-search';
+import warn from 'lib/warn';
 
 class PromotionAppliesToField extends React.Component {
 	static propTypes = {
@@ -102,24 +104,69 @@ class PromotionAppliesToField extends React.Component {
 		this.initializeValue( appliesToType );
 	};
 
-	render() {
-		const {
-			value,
-			edit,
-			singular,
-		} = this.props;
-		const { appliesToType } = this.state;
+	onProductIdChange = ( productId ) => {
+		const { edit } = this.props;
+		edit( 'appliesTo', { productIds: [ productId ] } );
+	}
 
-		return (
-			<div className="promotion-applies-to-field">
-				<FormField { ...this.props }>
-					{ this.renderTypeSelect() }
+	onProductIdsChange = ( productIds ) => {
+		const { edit } = this.props;
+		edit( 'appliesTo', { productIds } );
+	}
+
+	renderSearch( appliesToType ) {
+		const { value, edit, singular } = this.props;
+
+		switch ( appliesToType ) {
+			case 'all':
+				return null;
+			case 'productIds':
+				const productIds = ( value && value.productIds ? value.productIds : [] );
+
+				if ( singular ) {
+					const productId = productIds.length && productIds[ 0 ];
+
+					return (
+						<ProductSearch
+							value={ productId }
+							onChange={ this.onProductIdChange }
+							singular
+						/>
+					);
+				}
+
+				return (
+					<ProductSearch
+						value={ productIds }
+						onChange={ this.onProductIdsChange }
+					/>
+				);
+			case 'productCategoryIds':
+				return (
 					<AppliesToFilteredList
 						appliesToType={ appliesToType }
 						singular={ singular }
 						value={ value }
 						edit={ edit }
 					/>
+				);
+			case null:
+				// TODO: Add placeholder?
+				return null;
+			default:
+				warn( `Unrecognized appliesToType: ${ appliesToType }` );
+				return null;
+		}
+	}
+
+	render() {
+		const { appliesToType } = this.state;
+
+		return (
+			<div className="promotion-applies-to-field">
+				<FormField { ...this.props }>
+					{ this.renderTypeSelect() }
+					{ this.renderSearch( appliesToType ) }
 				</FormField>
 			</div>
 		);
