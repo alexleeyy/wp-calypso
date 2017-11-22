@@ -13,10 +13,11 @@ import middleware, {
 	sendAnalyticsLogEvent,
 	getEventMessageFromTracksData,
 } from '../middleware-calypso';
+import getSkills from 'state/happychat/selectors/get-skills';
 import { selectSiteId } from 'state/help/actions';
 import { setRoute } from 'state/ui/actions';
 import { getCurrentUserLocale } from 'state/current-user/selectors';
-import { getGroups } from 'state/happychat/selectors';
+import getGroups from 'state/happychat/selectors/get-groups';
 import { sendPreferences } from 'state/happychat/connection/actions';
 import {
 	HAPPYCHAT_CHAT_STATUS_ASSIGNED,
@@ -70,7 +71,11 @@ describe( 'middleware', () => {
 				const action = selectSiteId( state.sites.items[ 1 ].ID );
 				actionMiddleware( action );
 				expect( store.dispatch ).toHaveBeenCalledWith(
-					sendPreferences( getCurrentUserLocale( state ), getGroups( state, action.siteId ) )
+					sendPreferences(
+						getCurrentUserLocale( state ),
+						getGroups( state, action.siteId ),
+						getSkills( state, action.siteId )
+					)
 				);
 			} );
 

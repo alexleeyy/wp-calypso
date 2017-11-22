@@ -1,7 +1,7 @@
+/** @format */
+
 /**
  * External dependencies
- *
- * @format
  */
 import page from 'page';
 import PropTypes from 'prop-types';
@@ -71,7 +71,21 @@ export class TransferDomain extends Component {
 
 		this.setState( { errorMessage: null } );
 
-		upgradesActions.addItem( cartItems.domainTransfer( { domain } ) );
+		const transferItems = [];
+
+		transferItems.push(
+			cartItems.domainTransfer( {
+				domain,
+			} )
+		);
+
+		transferItems.push(
+			cartItems.domainTransferPrivacy( {
+				domain,
+			} )
+		);
+
+		upgradesActions.addItems( transferItems );
 
 		page( '/checkout/' + selectedSiteSlug );
 	};

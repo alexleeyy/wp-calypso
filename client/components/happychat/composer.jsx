@@ -7,19 +7,20 @@ import classNames from 'classnames';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { get, isEmpty, throttle } from 'lodash';
-import { localize } from 'i18n-calypso';
 
 /**
  * Internal dependencies
  */
-import { sendMessage } from 'state/happychat/connection/actions';
-import { setCurrentMessage } from 'state/happychat/ui/actions';
-import { sendTyping, sendNotTyping } from 'state/happychat/connection/actions';
-import getCurrentMessage from 'state/happychat/selectors/get-happychat-current-message';
-import { canUserSendMessages } from 'state/happychat/selectors';
 import scrollbleed from './scrollbleed';
+
+const sendThrottledTyping = throttle(
+	( onSendTyping, msg ) => {
+		onSendTyping( msg );
+	},
+	1000,
+	{ leading: true, trailing: false }
+);
 
 /*
  * Renders a textarea to be used to comopose a message for the chat.
@@ -42,17 +43,9 @@ export const Composer = createReactClass( {
 	onChange( event ) {
 		const { onSendTyping, onSendNotTyping, onSetCurrentMessage } = this.props;
 
-		const sendThrottledTyping = throttle(
-			msg => {
-				onSendTyping( msg );
-			},
-			1000,
-			{ leading: true, trailing: false }
-		);
-
 		const msg = get( event, 'target.value' );
 		onSetCurrentMessage( msg );
-		isEmpty( msg ) ? onSendNotTyping() : sendThrottledTyping( msg );
+		isEmpty( msg ) ? onSendNotTyping() : sendThrottledTyping( onSendTyping, msg );
 	},
 
 	onKeyDown( event ) {
@@ -104,17 +97,3 @@ export const Composer = createReactClass( {
 		);
 	},
 } );
-
-const mapState = state => ( {
-	disabled: ! canUserSendMessages( state ),
-	message: getCurrentMessage( state ),
-} );
-
-const mapDispatch = {
-	onSendTyping: sendTyping,
-	onSendNotTyping: sendNotTyping,
-	onSendMessage: sendMessage,
-	onSetCurrentMessage: setCurrentMessage,
-};
-
-export default connect( mapState, mapDispatch )( localize( Composer ) );

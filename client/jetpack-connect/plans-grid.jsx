@@ -26,21 +26,17 @@ class JetpackPlansGrid extends Component {
 		isLanding: PropTypes.bool,
 		onSelect: PropTypes.func,
 		selectedSite: PropTypes.object,
-		showFirst: PropTypes.bool,
 
 		// Connected
 		translate: PropTypes.func.isRequired,
 	};
 
 	renderConnectHeader() {
-		const { isLanding, showFirst, translate } = this.props;
+		const { isLanding, translate } = this.props;
 
 		let headerText = translate( 'Your site is now connected!' );
 		let subheaderText = translate( "Now pick a plan that's right for you." );
 
-		if ( showFirst ) {
-			headerText = translate( 'You are moments away from connecting your site' );
-		}
 		if ( isLanding ) {
 			headerText = translate( "Pick a plan that's right for you." );
 			subheaderText = '';
@@ -50,7 +46,7 @@ class JetpackPlansGrid extends Component {
 
 	render() {
 		return (
-			<Main wideLayout>
+			<Main wideLayout className="jetpack-connect__hide-plan-icons">
 				<div className="jetpack-connect__plans">
 					{ this.renderConnectHeader() }
 					<div id="plans">

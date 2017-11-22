@@ -5,9 +5,10 @@
  */
 import wpcom from 'lib/wp';
 import config from 'config';
-import { getGroups } from 'state/happychat/selectors';
+import getGroups from 'state/happychat/selectors/get-groups';
 import { getCurrentUser, getCurrentUserLocale } from 'state/current-user/selectors';
 import { getHelpSelectedSite } from 'state/help/selectors';
+import getSkills from 'state/happychat/selectors/get-skills';
 
 // Promise based interface for wpcom.request
 const request = ( ...args ) =>
@@ -39,9 +40,12 @@ export const getHappychatAuth = state => () => {
 	const locale = getCurrentUserLocale( state );
 
 	let groups = getGroups( state );
+	let skills = getSkills( state );
 	const selectedSite = getHelpSelectedSite( state );
+
 	if ( selectedSite && selectedSite.ID ) {
 		groups = getGroups( state, selectedSite.ID );
+		skills = getSkills( state, selectedSite.ID );
 	}
 
 	const user = getCurrentUser( state );
@@ -50,6 +54,7 @@ export const getHappychatAuth = state => () => {
 		signer_user_id: user.ID,
 		locale,
 		groups,
+		skills,
 	};
 
 	return startSession()

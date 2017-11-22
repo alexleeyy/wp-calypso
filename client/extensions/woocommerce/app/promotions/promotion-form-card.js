@@ -9,8 +9,23 @@ import classNames from 'classnames';
  * Internal dependencies
  */
 import Card from 'components/card';
-import { renderField } from './fields';
 import SectionHeader from 'components/section-header';
+
+function renderField( fieldName, fieldModel, promotion, edit, currency, showEmptyValidationErrors ) {
+	const { component, validate } = fieldModel;
+	const validationError = validate && validate( fieldName, promotion, currency, showEmptyValidationErrors );
+
+	const props = {
+		key: fieldName,
+		value: promotion[ fieldName ],
+		promotion,
+		fieldName,
+		edit,
+		currency,
+		validationErrorText: validationError,
+	};
+	return React.cloneElement( component, props );
+}
 
 const promotionFieldEdit = ( siteId, promotion, editPromotion ) => ( fieldName, newValue ) => {
 	const newPromotion = {
@@ -26,11 +41,12 @@ const PromotionFormCard = ( {
 	promotion,
 	cardModel,
 	editPromotion,
+	showEmptyValidationErrors,
 } ) => {
 	const edit = promotionFieldEdit( siteId, promotion, editPromotion );
 	const fields = Object.keys( cardModel.fields ).map( ( fieldName ) => {
 		const fieldModel = cardModel.fields[ fieldName ];
-		return renderField( fieldName, fieldModel, promotion, edit, currency );
+		return renderField( fieldName, fieldModel, promotion, edit, currency, showEmptyValidationErrors );
 	} );
 
 	const classes = classNames(
@@ -60,6 +76,7 @@ PromotionFormCard.PropTypes = {
 		labelText: PropTypes.string.isRequired,
 		fields: PropTypes.object.isRequired,
 	} ).isRequired,
+	showEmptyValidationErrors: PropTypes.bool,
 };
 
 export default PromotionFormCard;

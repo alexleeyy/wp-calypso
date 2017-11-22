@@ -36,6 +36,8 @@ export const CommentListHeader = ( {
 		? convertDateToUserLocation( postDate, timezone( site ), gmtOffset( site ) ).format( 'll LT' )
 		: '';
 
+	const title = postTitle.trim() || translate( 'Untitled' );
+
 	return (
 		<div className="comment-list__header">
 			<QueryPosts siteId={ siteId } postId={ postId } />
@@ -47,7 +49,12 @@ export const CommentListHeader = ( {
 				actionText={ translate( 'View Post' ) }
 				backHref={ `/comments/all/${ siteSlug }` }
 			>
-				<div className="comment-list__header-title">{ postTitle }</div>
+				<div className="comment-list__header-title">
+					{ translate( 'Comments on {{span}}%(postTitle)s{{/span}}', {
+						args: { postTitle: title },
+						components: { span: <span className="comment-list__header-post-title" /> },
+					} ) }
+				</div>
 				<div className="comment-list__header-date">{ formattedDate }</div>
 			</HeaderCake>
 		</div>

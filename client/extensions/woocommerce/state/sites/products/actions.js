@@ -1,7 +1,7 @@
+/** @format */
+
 /**
  * External dependencies
- *
- * @format
  */
 import { isArray } from 'lodash';
 /**
@@ -155,6 +155,14 @@ export function fetchProducts( siteId, params, successAction, failureAction ) {
 		params: { ...DEFAULT_QUERY, ...params },
 		successAction,
 		failureAction,
+	};
+}
+
+export function fetchProductsFailure( siteId, params ) {
+	return {
+		type: WOOCOMMERCE_PRODUCTS_REQUEST_FAILURE,
+		siteId,
+		params,
 	};
 }
 

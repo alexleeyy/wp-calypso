@@ -1,7 +1,7 @@
+/** @format */
+
 /**
  * External dependencies
- *
- * @format
  */
 
 import inherits from 'inherits';
@@ -66,6 +66,38 @@ function checkInboundTransferStatus( domainName, onComplete ) {
 	} );
 }
 
+function restartInboundTransfer( siteId, domainName, onComplete ) {
+	if ( ! domainName || ! siteId ) {
+		onComplete( null );
+		return;
+	}
+
+	wpcom.undocumented().restartInboundTransfer( siteId, domainName, function( serverError, result ) {
+		if ( serverError ) {
+			onComplete( serverError.error );
+			return;
+		}
+
+		onComplete( null, result );
+	} );
+}
+
+function resendInboundTransferEmail( domainName, onComplete ) {
+	if ( ! domainName ) {
+		onComplete( null );
+		return;
+	}
+
+	wpcom.undocumented().resendInboundTransferEmail( domainName, function( serverError, result ) {
+		if ( serverError ) {
+			onComplete( serverError );
+			return;
+		}
+
+		onComplete( null, result );
+	} );
+}
+
 function canRedirect( siteId, domainName, onComplete ) {
 	if ( ! domainName ) {
 		onComplete( new ValidationError( 'empty_query' ) );
@@ -101,7 +133,8 @@ function getFixedDomainSearch( domainName ) {
 		.trim()
 		.toLowerCase()
 		.replace( /^(https?:\/\/)?(www\.)?/, '' )
-		.replace( /\/$/, '' );
+		.replace( /\/$/, '' )
+		.replace( /_/g, '-' );
 }
 
 function isSubdomain( domainName ) {
@@ -142,8 +175,18 @@ function hasPendingGoogleAppsUsers( domain ) {
 	);
 }
 
-function getSelectedDomain( { domains, selectedDomainName } ) {
-	return find( domains.list, { name: selectedDomainName } );
+function getSelectedDomain( { domains, selectedDomainName, isTransfer } ) {
+	return find( domains.list, domain => {
+		if ( domain.name !== selectedDomainName ) {
+			return false;
+		}
+
+		if ( isTransfer && domain.type === domainTypes.TRANSFER ) {
+			return true;
+		}
+
+		return domain.type !== domainTypes.TRANSFER;
+	} );
 }
 
 function isRegisteredDomain( domain ) {
@@ -221,4 +264,6 @@ export {
 	isMappedDomain,
 	isRegisteredDomain,
 	isSubdomain,
+	restartInboundTransfer,
+	resendInboundTransferEmail,
 };
