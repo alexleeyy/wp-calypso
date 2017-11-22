@@ -143,7 +143,7 @@ export class Comment extends Component {
 					<CommentEdit { ...{ commentId } } toggleEditMode={ this.toggleEditMode } />
 				) }
 
-				<CommentRepliesList { ...{ siteId, commentParentId: commentId } } />
+				{ isPostView && <CommentRepliesList { ...{ siteId, commentParentId: commentId } } /> }
 			</Card>
 		);
 	}

@@ -56,7 +56,9 @@ export class CommentView extends Component {
 						illustration="/calypso/images/illustrations/illustration-500.svg"
 					/>
 				) }
-				{ canModerateComments && <Comment commentId={ commentId } refreshCommentData={ true } /> }
+				{ canModerateComments && (
+					<Comment commentId={ commentId } refreshCommentData={ true } isPostView={ true } />
+				) }
 				{ canModerateComments && <CommentPermalink { ...{ siteId, commentId } } /> }
 			</Main>
 		);
