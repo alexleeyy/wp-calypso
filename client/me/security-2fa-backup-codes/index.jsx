@@ -13,14 +13,14 @@ const debug = debugFactory( 'calypso:me:security:2fa-backup-codes' );
 /**
  * Internal dependencies
  */
-import Security2faBackupCodesPrompt from 'me/security-2fa-backup-codes-prompt';
-import SectionHeader from 'components/section-header';
-import Button from 'components/button';
-import Card from 'components/card';
-import eventRecorder from 'me/event-recorder';
-import twoStepAuthorization from 'lib/two-step-authorization';
-import Security2faBackupCodesList from 'me/security-2fa-backup-codes-list';
-import Notice from 'components/notice';
+import Security2faBackupCodesPrompt from 'client/me/security-2fa-backup-codes-prompt';
+import SectionHeader from 'client/components/section-header';
+import Button from 'client/components/button';
+import Card from 'client/components/card';
+import eventRecorder from 'client/me/event-recorder';
+import twoStepAuthorization from 'client/lib/two-step-authorization';
+import Security2faBackupCodesList from 'client/me/security-2fa-backup-codes-list';
+import Notice from 'client/components/notice';
 
 const Security2faBackupCodes = createReactClass( {
 	displayName: 'Security2faBackupCodes',

@@ -4,8 +4,8 @@
  * Internal dependencies
  */
 
-import Dispatcher from 'dispatcher';
-import Emitter from 'lib/mixins/emitter';
+import Dispatcher from 'client/dispatcher';
+import Emitter from 'client/lib/mixins/emitter';
 
 var _deletedSite = {},
 	DeletedSiteStore;

@@ -10,8 +10,8 @@ import { localize } from 'i18n-calypso';
 /**
  * Internal dependencies
  */
-import QueryConciergeShifts from 'components/data/query-concierge-shifts';
-import { getConciergeShifts } from 'state/selectors';
+import QueryConciergeShifts from 'client/components/data/query-concierge-shifts';
+import { getConciergeShifts } from 'client/state/selectors';
 
 class ConciergeMain extends Component {
 	render() {

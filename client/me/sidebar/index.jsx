@@ -16,22 +16,22 @@ const debug = debugFactory( 'calypso:me:sidebar' );
 /**
  * Internal dependencies
  */
-import Sidebar from 'layout/sidebar';
-import SidebarFooter from 'layout/sidebar/footer';
-import SidebarHeading from 'layout/sidebar/heading';
-import SidebarItem from 'layout/sidebar/item';
-import SidebarMenu from 'layout/sidebar/menu';
+import Sidebar from 'client/layout/sidebar';
+import SidebarFooter from 'client/layout/sidebar/footer';
+import SidebarHeading from 'client/layout/sidebar/heading';
+import SidebarItem from 'client/layout/sidebar/item';
+import SidebarMenu from 'client/layout/sidebar/menu';
 import config from 'config';
-import ProfileGravatar from 'me/profile-gravatar';
-import eventRecorder from 'me/event-recorder';
-import userFactory from 'lib/user';
+import ProfileGravatar from 'client/me/profile-gravatar';
+import eventRecorder from 'client/me/event-recorder';
+import userFactory from 'client/lib/user';
 const user = userFactory();
-import userUtilities from 'lib/user/utils';
-import Button from 'components/button';
-import purchasesPaths from 'me/purchases/paths';
-import { setNextLayoutFocus } from 'state/ui/layout-focus/actions';
-import { getCurrentUser } from 'state/current-user/selectors';
-import { logoutUser } from 'state/login/actions';
+import userUtilities from 'client/lib/user/utils';
+import Button from 'client/components/button';
+import purchasesPaths from 'client/me/purchases/paths';
+import { setNextLayoutFocus } from 'client/state/ui/layout-focus/actions';
+import { getCurrentUser } from 'client/state/current-user/selectors';
+import { logoutUser } from 'client/state/login/actions';
 
 const MeSidebar = createReactClass( {
 	displayName: 'MeSidebar',

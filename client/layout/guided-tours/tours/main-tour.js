@@ -20,16 +20,16 @@ import {
 	Quit,
 	Continue,
 	Link,
-} from 'layout/guided-tours/config-elements';
+} from 'client/layout/guided-tours/config-elements';
 import {
 	isNewUser,
 	isEnabled,
 	isSelectedSitePreviewable,
 	isSelectedSiteCustomizable,
-} from 'state/ui/guided-tours/contexts';
-import { isPreviewShowing } from 'state/ui/selectors';
-import { getScrollableSidebar } from 'layout/guided-tours/positioning';
-import scrollTo from 'lib/scroll-to';
+} from 'client/state/ui/guided-tours/contexts';
+import { isPreviewShowing } from 'client/state/ui/selectors';
+import { getScrollableSidebar } from 'client/layout/guided-tours/positioning';
+import scrollTo from 'client/lib/scroll-to';
 
 const scrollSidebarToTop = () => scrollTo( { y: 0, container: getScrollableSidebar() } );
 

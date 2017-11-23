@@ -19,16 +19,16 @@ import {
 	receiveCommentSuccess,
 	removeCommentStatusErrorNotice,
 } from '../';
-import { COMMENTS_EDIT } from 'state/action-types';
+import { COMMENTS_EDIT } from 'client/state/action-types';
 import {
 	requestComment as requestCommentAction,
 	editComment as editCommentAction,
 	receiveComments as receiveCommentsAction,
 	receiveCommentsError as receiveCommentsErrorAction,
-} from 'state/comments/actions';
-import { bypassDataLayer } from 'state/data-layer/utils';
-import { http } from 'state/data-layer/wpcom-http/actions';
-import { errorNotice, removeNotice } from 'state/notices/actions';
+} from 'client/state/comments/actions';
+import { bypassDataLayer } from 'client/state/data-layer/utils';
+import { http } from 'client/state/data-layer/wpcom-http/actions';
+import { errorNotice, removeNotice } from 'client/state/notices/actions';
 
 const query = {
 	siteId: 1337,
